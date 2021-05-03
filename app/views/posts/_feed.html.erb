@@ -1,0 +1,41 @@
+<div class="column is-half">
+    <% @posts.each do |post| %>
+        <div class="box">
+            <div class="media">
+                <div class="media-content">
+                    <strong class="title is-5"><%= link_to post.title, post_path(post.id) %></strong>
+                    <p class="control">
+                        <small><%= post.post %></small>
+                    </p>
+
+                    <% if user_signed_in? %>
+                        <small ><%= link_to post.user.username %></small>
+                    <% else %>
+                        <small>Anonymous</small>
+                    <% end %>
+                    <% if user_signed_in? %>
+                    <% if post.user.id == current_user.id %>
+                        <nav class="level">
+                            <div class="level-left is-mobile">
+                                <%= link_to edit_post_path(post.id), class: "level-item" do %>
+                                <span class="icon">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </span>
+                                <% end %>
+                                <%= link_to post, method: :delete, data: { confirm: "Are you sure you want to delete your post?" 
+                                } do %>
+                                <span class="icon">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </span>
+                                <% end %>
+                            </div>
+                        </nav>
+                    <% end %>
+                    <% end %>
+
+                </div>
+            </div>
+        </div>
+
+    <% end %>
+</div>
